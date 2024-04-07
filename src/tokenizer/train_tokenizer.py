@@ -1,8 +1,20 @@
 import argparse
 import os 
+import sys
 
-from tokenizer       import train_bpe_tokenizer
-from tokenizer_tools import save_vocab_files
+if __name__ == "__main__":
+    ## Only add src path when calling this function directly ##
+    current_dir = os.path.abspath(os.path.dirname(__file__))
+    current_dir = os.path.dirname(current_dir)
+    current_dir = os.path.dirname(current_dir)
+    sys.path.insert(0, current_dir)
+    print("added path")
+    print(current_dir)
+
+from src.tokenizer.tokenizer       import train_bpe_tokenizer
+from src.tokenizer.tokenizer_tools import save_vocab_files
+
+
 
 def train_and_save_tokenizer(input_path, vocab_size, special_tokens,output_dir):
 
@@ -29,10 +41,10 @@ if __name__ == "__main__":
     main()
 
 #on own computer 
-# python src/train_tokenizer.py --input_path tests/fixtures/corpus.en  --vocab_size 300 --output_dir outputs  
-# python src/train_tokenizer.py --input_path data/TinyStoriesV2-GPT4-train.txt --vocab_size 10000 --output_dir outputs
+# python src/tokenizer/train_tokenizer.py --input_path tests/fixtures/corpus.en  --vocab_size 300 --output_dir outputs  
+# python src/tokenizer/train_tokenizer.py --input_path data/TinyStoriesV2-GPT4-train.txt --vocab_size 10000 --output_dir outputs
 
 # on sail culster
-# python src/train_tokenizer.py --input_path tests/fixtures/corpus.en  --vocab_size 300 --output_dir /pasteur/data/c336/outputs
-#python src/train_tokenizer.py --input_path /pasteur/data/c336/data/TinyStoriesV2-GPT4-train.txt --vocab_size 10000 --output_dir /pasteur/data/c336/outputs
-#python src/train_tokenizer.py --input_path /pasteur/data/c336/data/owt_train.txt --vocab_size 10000 --output_dir /pasteur/data/c336/outputs
+# python src/tokenizer/train_tokenizer.py --input_path tests/fixtures/corpus.en  --vocab_size 300 --output_dir /pasteur/data/c336/outputs
+#python src/tokenizer/train_tokenizer.py --input_path /pasteur/data/c336/data/TinyStoriesV2-GPT4-train.txt --vocab_size 10000 --output_dir /pasteur/data/c336/outputs
+#python src/tokenizer/train_tokenizer.py --input_path /pasteur/data/c336/data/owt_train.txt --vocab_size 10000 --output_dir /pasteur/data/c336/outputs

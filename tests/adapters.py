@@ -8,6 +8,9 @@ import numpy.typing as npt
 import torch
 
 
+from src.tokenizer.tokenizer import train_bpe_tokenizer
+
+
 def run_positionwise_feedforward(
     d_model: int,
     d_ff: int,
@@ -569,4 +572,8 @@ def run_train_bpe(
                 representing that <token1> was merged with <token2>.
                 Merges are ordered by order of creation.
     """
-    raise NotImplementedError
+    vocab, merges  = train_bpe_tokenizer(input_path     = input_path, 
+                                         vocab_size     = vocab_size, 
+                                         special_tokens = special_tokens)
+    return vocab, merges
+

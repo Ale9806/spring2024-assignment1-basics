@@ -5,7 +5,9 @@ import regex as re
 import os
 import json
 import pickle
-from constants import PAT
+
+from src.tokenizer.constants import PAT
+
 
 def read_corpus(input_path,encoding:Optional[str]='utf-8') -> str:
     """

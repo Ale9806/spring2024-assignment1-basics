@@ -1,4 +1,7 @@
-from tokenizer_tools import read_corpus,pre_tokenize_corpus,initialize_vocabulary,merge_pair,compute_pair_freqs
+
+from src.tokenizer.tokenizer_tools import read_corpus,pre_tokenize_corpus,initialize_vocabulary,merge_pair,compute_pair_freqs
+
+
 from collections         import Counter
 
 def train_bpe_tokenizer(input_path: str, 
