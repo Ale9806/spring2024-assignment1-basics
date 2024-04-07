@@ -24,6 +24,7 @@ def train_bpe_tokenizer(input_path: str,
     corpus_str:str                = read_corpus(input_path)
     corpus_list:list[str]         = pre_tokenize_corpus(corpus_str)
     word_freq:dict[str,int]       = Counter(corpus_list)
+    del corpus_list, corpus_str   # Delete uncessary variables to save memory
     vocab: dict[int,bytes]        =  initialize_vocabulary(special_tokens)
     splits:dict[str,tuple[bytes]] = {word: list(bytes((i,)) for i in word.encode('utf-8')) for word in word_freq.keys()}
     merges     = []
@@ -40,7 +41,6 @@ def train_bpe_tokenizer(input_path: str,
 
             elif max_freq == freq:
                 best_pair = max(pair,best_pair)
-
         if best_pair == '':
             break
         
