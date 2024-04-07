@@ -28,6 +28,11 @@ def main():
 if __name__ == "__main__":
     main()
 
-
+#on own computer 
 # python src/train_tokenizer.py --input_path tests/fixtures/corpus.en  --vocab_size 300 --output_dir outputs  
 # python src/train_tokenizer.py --input_path data/TinyStoriesV2-GPT4-train.txt --vocab_size 10000 --output_dir outputs
+
+# on sail culster
+# python src/train_tokenizer.py --input_path tests/fixtures/corpus.en  --vocab_size 300 --output_dir /pasteur/data/c336/outputs
+#python src/train_tokenizer.py --input_path /pasteur/data/c336/data/TinyStoriesV2-GPT4-train.txt --vocab_size 10000 --output_dir /pasteur/data/c336/outputs
+#python src/train_tokenizer.py --input_path /pasteur/data/c336/data/owt_train.txt --vocab_size 10000 --output_dir /pasteur/data/c336/outputs
