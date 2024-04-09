@@ -8,7 +8,10 @@ import numpy.typing as npt
 import torch
 
 
-from src.tokenizer.tokenizer import train_bpe_tokenizer
+from src.tokenizer.tokenizer import train_bpe_tokenizer, Tokenizer
+from src.transformer.rmsnorm import RMSNorm
+from src.transformer.activation_function    import GeLu, Softmax
+from src.transformer.ffn     import FFN
 
 
 def run_positionwise_feedforward(
@@ -46,7 +49,11 @@ def run_positionwise_feedforward(
     # You can also manually assign the weights
     # my_ffn.w1.weight.data = weights["w1.weight"]
     # my_ffn.w2.weight.data = weights["w2.weight"]
-    raise NotImplementedError
+
+    #ffn = FFN().load_state_dict(weights)
+    ffn = FFN(w1=weights["w1.weight"],w2=weights["w2.weight"])
+    x   = ffn(in_features)
+    return x 
 
 
 def run_scaled_dot_product_attention(
@@ -334,7 +341,9 @@ def run_rmsnorm(
         FloatTensor of with the same shape as `in_features` with the output of running
         layernorm of the `in_features`.
     """
-    raise NotImplementedError
+    rmsnorm_layer = RMSNorm(d_model,epsilon=eps)
+    output        = rmsnorm_layer(in_features,gain=weights["weight"])
+    return output
 
 
 def run_gelu(in_features: torch.FloatTensor) -> torch.FloatTensor:
@@ -349,7 +358,8 @@ def run_gelu(in_features: torch.FloatTensor) -> torch.FloatTensor:
         FloatTensor of with the same shape as `in_features` with the output of applying
         GELU to each element.
     """
-    raise NotImplementedError
+    a = GeLu() 
+    return a(in_features)
 
 
 def run_get_batch(
@@ -393,7 +403,9 @@ def run_softmax(in_features: torch.FloatTensor, dim: int) -> torch.FloatTensor:
         FloatTensor of with the same shape as `in_features` with the output of
         softmax normalizing the specified `dim`.
     """
-    raise NotImplementedError
+    a = Softmax()
+    return a(in_features)
+  
 
 
 def run_cross_entropy(inputs: torch.FloatTensor, targets: torch.LongTensor):
@@ -539,8 +551,9 @@ def get_tokenizer(
     Returns:
         A BPE tokenizer that uses the provided vocab, merges, and special tokens.
     """
-    raise NotImplementedError
-
+    #bpe_tokenizer = Tokenizer.from_files(vocab,merges,special_tokens)
+    bpe_tokenizer = Tokenizer(vocab,merges,special_tokens)
+    return bpe_tokenizer
 
 def run_train_bpe(
     input_path: str | os.PathLike,
